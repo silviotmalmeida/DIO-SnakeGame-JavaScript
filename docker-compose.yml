@@ -1,0 +1,21 @@
+version: '3'
+
+volumes:
+    dados:
+
+networks:
+    web:
+
+services:
+
+    frontend:
+        image: nginx:1.13
+        volumes:
+            # Site
+            - ./web:/usr/share/nginx/html
+            # Configuracao do proxt reverso
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - 80:80
+        networks:
+            - web

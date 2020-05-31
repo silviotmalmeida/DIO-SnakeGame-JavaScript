@@ -6,12 +6,18 @@ let snake = [{
     y: 8 * box
 }];
 let direction = "right";
+let food = {
+    //the funcion random() returns a random number between 0 and 1
+    //the function floor() returns a integer of a number
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 
 
 function createBackground(){
 
     context.fillStyle = "lightgreen";
-    context.fillRect(0, 0, 16* box, 16 * box);
+    context.fillRect(0, 0, 16 * box, 16 * box);
 }
 
 function createSnake(){
@@ -41,8 +47,24 @@ function update(event){
     //the new direction of the snake's head cannot be the reverse of the previously direction
     if(event.keyCode == 38 && direction != "down") direction = "up";
 }
+
+function drawFood(){
+
+    context.fillStyle = "red";
+    context.fillRect(food.x, food.y, box, box);
+}
+
+
+
+
+
+
+
+
 //Includind the event listener for the keyboard commands
 document.addEventListener('keydown', update);
+
+
 
 function startGame(){
 
@@ -51,6 +73,9 @@ function startGame(){
 
     //drawning the snake's head in the start position or in the last position of the previous loop
     createSnake();
+
+    //drawning the snake's food in the start position or in the last position of the previous loop
+    drawFood();
 
     //getting the actual position of the snake's head
     let snakeX = snake[0].x;
@@ -83,5 +108,6 @@ function startGame(){
     snake.unshift(newHead);
 }
 
+//creating a infinite loop of starGame() execution 
 let game = setInterval(startGame, 100);
 

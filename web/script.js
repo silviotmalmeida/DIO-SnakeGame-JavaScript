@@ -7,12 +7,9 @@ let snake = [{
 }];
 let direction = "right";
 let food = {
-    //the funcion random() returns a random number between 0 and 1
-    //the function floor() returns a integer of a number
-    x: Math.floor(Math.random() * 15 + 1) * box,
-    y: Math.floor(Math.random() * 15 + 1) * box
-}
-
+    x: 0,
+    y: 0
+};
 
 function createBackground(){
 
@@ -48,18 +45,22 @@ function update(event){
     if(event.keyCode == 38 && direction != "down") direction = "up";
 }
 
+function generateFoodPosition(){
+
+    //the funcion random() returns a random number between 0 and 1
+    //the function floor() returns a integer of a number
+    food.x = Math.floor(Math.random() * 15 + 1) * box;
+    food.y = Math.floor(Math.random() * 15 + 1) * box;
+}
+
 function drawFood(){
 
     context.fillStyle = "red";
     context.fillRect(food.x, food.y, box, box);
 }
 
-
-
-
-
-
-
+//generating the food position
+generateFoodPosition();
 
 //Includind the event listener for the keyboard commands
 document.addEventListener('keydown', update);
@@ -93,9 +94,32 @@ function startGame(){
     if(snakeY > 15 * box && direction == "down") snakeY = 0;
     if(snakeY < 0 && direction == "up") snakeY = 15 * box;
 
-    //the method pop() removes the last item of an array
-    //erasing the snake's head   
-    snake.pop();
+    //verifing the crash conditions
+    for(let i =1; i < snake.length; i++){
+
+        //if snake's head crashes any part of it's body, the game will end
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+            clearInterval(game);
+            alert("Game Over! You made " + snake.length + "points.");
+            location.reload();            
+        }
+    }
+
+    //if not reaches the food, the snake's body won't grow
+    if (snakeX != food.x || snakeY != food.y){
+
+        //the method pop() removes the last item of an array
+        //erasing the snake's head   
+        snake.pop();
+    }
+    //if reaches the food, the snake's body will grow and generates a new food
+    else{
+
+        //generating the food position
+        generateFoodPosition();
+        //drawning the snake's food   
+        drawFood();
+    }    
     
     //setting the new position of the snake's head
     let newHead = {
@@ -106,8 +130,14 @@ function startGame(){
     //the method unshift() add a new item in the beginning of an array
     //drawning a new position of the snake's head after the repositioning
     snake.unshift(newHead);
+
+    //if snake's size become 15, the game is over
+    if(snake.length == 15){
+        clearInterval(game);
+        alert("You won! You made " + snake.length + "points.");
+        location.reload();            
+    }
 }
 
 //creating a infinite loop of starGame() execution 
 let game = setInterval(startGame, 100);
-

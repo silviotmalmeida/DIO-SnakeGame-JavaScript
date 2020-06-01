@@ -1,2 +1,2 @@
-# DIO-JogoCobrinha-JavaScript
-Recriando o Jogo da Cobrinha com JavaScript
+# DIO-SnakeGame-JavaScript
+Coding the Snake Game with JavaScript!

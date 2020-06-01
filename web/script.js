@@ -7,12 +7,9 @@ let snake = [{
 }];
 let direction = "right";
 let food = {
-    //the funcion random() returns a random number between 0 and 1
-    //the function floor() returns a integer of a number
-    x: Math.floor(Math.random() * 15 + 1) * box,
-    y: Math.floor(Math.random() * 15 + 1) * box
-}
-
+    x: 0,
+    y: 0
+};
 
 function createBackground(){
 
@@ -48,18 +45,22 @@ function update(event){
     if(event.keyCode == 38 && direction != "down") direction = "up";
 }
 
+function generateFoodPosition(){
+
+    //the funcion random() returns a random number between 0 and 1
+    //the function floor() returns a integer of a number
+    food.x = Math.floor(Math.random() * 15 + 1) * box;
+    food.y = Math.floor(Math.random() * 15 + 1) * box;
+}
+
 function drawFood(){
 
     context.fillStyle = "red";
     context.fillRect(food.x, food.y, box, box);
 }
 
-
-
-
-
-
-
+//generating the food position
+generateFoodPosition();
 
 //Includind the event listener for the keyboard commands
 document.addEventListener('keydown', update);
@@ -93,9 +94,22 @@ function startGame(){
     if(snakeY > 15 * box && direction == "down") snakeY = 0;
     if(snakeY < 0 && direction == "up") snakeY = 15 * box;
 
-    //the method pop() removes the last item of an array
-    //erasing the snake's head   
-    snake.pop();
+    if (snakeX != food.x || snakeY != food.y){
+
+        //the method pop() removes the last item of an array
+        //erasing the snake's head   
+        snake.pop();
+    }
+    else{
+
+        //generating the food position
+        generateFoodPosition();
+        //drawning the snake's food   
+        drawFood();
+    }
+
+
+    
     
     //setting the new position of the snake's head
     let newHead = {

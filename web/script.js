@@ -94,6 +94,7 @@ function startGame(){
     if(snakeY > 15 * box && direction == "down") snakeY = 0;
     if(snakeY < 0 && direction == "up") snakeY = 15 * box;
 
+<<<<<<< HEAD
     //verifing the crash conditions
     for(let i =1; i < snake.length; i++){
 
@@ -106,20 +107,32 @@ function startGame(){
     }
 
     //if not reaches the food, the snake's body won't grow
+=======
+>>>>>>> 5fe1306b0d8e0bb797f0cf3a2360cab43e87b084
     if (snakeX != food.x || snakeY != food.y){
 
         //the method pop() removes the last item of an array
         //erasing the snake's head   
         snake.pop();
     }
+<<<<<<< HEAD
     //if reaches the food, the snake's body will grow and generates a new food
+=======
+>>>>>>> 5fe1306b0d8e0bb797f0cf3a2360cab43e87b084
     else{
 
         //generating the food position
         generateFoodPosition();
         //drawning the snake's food   
         drawFood();
+<<<<<<< HEAD
     }    
+=======
+    }
+
+
+    
+>>>>>>> 5fe1306b0d8e0bb797f0cf3a2360cab43e87b084
     
     //setting the new position of the snake's head
     let newHead = {
